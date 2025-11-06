@@ -1,5 +1,6 @@
 <?php ob_start(); $cfg = require __DIR__ . '/../../config/config.php'; ?>
 <h1>العملاء</h1>
+
 <div class="card">
   <a class="btn" href="<?= $cfg['APP_URL'] ?>/customers/create">إضافة عميل</a>
   <form method="post" action="<?= $cfg['APP_URL'] ?>/customers/import" enctype="multipart/form-data" style="margin-top:10px">
@@ -11,7 +12,9 @@
 </div>
 
 <table class="table" style="margin-top:10px">
-  <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>المنطقة</th><th>إدارة</th></tr></thead>
+  <thead>
+    <tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>المنطقة</th><th>إدارة</th></tr>
+  </thead>
   <tbody>
   <?php $i=1; foreach($customers as $c): ?>
     <tr>
@@ -31,4 +34,5 @@
   <?php endforeach; ?>
   </tbody>
 </table>
+
 <?php $content = ob_get_clean(); include __DIR__ . '/../layout.php'; ?>
