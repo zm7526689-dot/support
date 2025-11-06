@@ -46,4 +46,13 @@ $router->post('/users/delete', [UsersController::class, 'delete']);
 $router->get('/users/password', [UsersController::class, 'password']);
 $router->post('/users/password', [UsersController::class, 'password']);
 
+// Engineers
+$router->get('/engineers', [EngineersController::class, 'index']);
+$router->get('/engineers/create', [EngineersController::class, 'create']);
+$router->post('/engineers/create', [EngineersController::class, 'create']);
+$router->get('/engineers/edit', [EngineersController::class, 'edit']);
+$router->post('/engineers/edit', [EngineersController::class, 'edit']);
+$router->post('/engineers/delete', [EngineersController::class, 'delete']);
+
+
 $router->dispatch();
