@@ -1,58 +1,16 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+require_once __DIR__ . '/../config/bootstrap.php';
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$path = str_replace(['/supportops/public','index.php'],'',$path);
+if($path=='/' || $path==''){ $path='dashboard'; }
 
-require __DIR__ . '/../config/bootstrap.php';
-
-$router = new Router();
-
-// Auth
-$router->get('/login', [AuthController::class, 'login']);
-$router->post('/login', [AuthController::class, 'login']);
-$router->get('/logout', [AuthController::class, 'logout']);
-
-// Dashboard
-$router->get('/dashboard', [DashboardController::class, 'index']);
-
-// Customers
-$router->get('/customers', [CustomersController::class, 'index']);
-$router->get('/customers/create', [CustomersController::class, 'create']);
-$router->post('/customers/create', [CustomersController::class, 'create']);
-$router->get('/customers/edit', [CustomersController::class, 'edit']);
-$router->post('/customers/edit', [CustomersController::class, 'edit']);
-$router->post('/customers/delete', [CustomersController::class, 'delete']);
-
-// Tickets
-$router->get('/tickets', [TicketsController::class, 'index']);
-$router->get('/tickets/create', [TicketsController::class, 'create']);
-$router->post('/tickets/create', [TicketsController::class, 'create']);
-$router->get('/tickets/assignForm', [TicketsController::class, 'assignForm']);
-$router->post('/tickets/assign', [TicketsController::class, 'assign']);
-$router->get('/tickets/show', [TicketsController::class, 'show']);
-
-// Reports
-$router->post('/reports/create', [ReportsController::class, 'create']);
-
-// Knowledge
-$router->post('/knowledge/promote', [KnowledgeController::class, 'promote']);
-
-// Users
-$router->get('/users', [UsersController::class, 'index']);
-$router->get('/users/create', [UsersController::class, 'create']);
-$router->post('/users/create', [UsersController::class, 'create']);
-$router->get('/users/edit', [UsersController::class, 'edit']);
-$router->post('/users/edit', [UsersController::class, 'edit']);
-$router->post('/users/delete', [UsersController::class, 'delete']);
-$router->get('/users/password', [UsersController::class, 'password']);
-$router->post('/users/password', [UsersController::class, 'password']);
-
-// Engineers
-$router->get('/engineers', [EngineersController::class, 'index']);
-$router->get('/engineers/create', [EngineersController::class, 'create']);
-$router->post('/engineers/create', [EngineersController::class, 'create']);
-$router->get('/engineers/edit', [EngineersController::class, 'edit']);
-$router->post('/engineers/edit', [EngineersController::class, 'edit']);
-$router->post('/engineers/delete', [EngineersController::class, 'delete']);
-
-
-$router->dispatch();
+switch($path){
+  case 'login.php': (new AuthController)->login(); break;
+  case 'logout': (new AuthController)->logout(); break;
+  case 'customers': (new CustomersController)->index(); break;
+  case 'engineers': (new EngineersController)->index(); break;
+  case 'users': (new UsersController)->index(); break;
+  case 'dashboard': include APP_ROOT.'/views/dashboard.php'; break;
+  default: http_response_code(404); echo "404 Not Found"; break;
+}
+?>
