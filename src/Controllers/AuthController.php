@@ -1,18 +1,26 @@
 <?php
 class AuthController {
   public function login(){
-    global $pdo; $cfg = require __DIR__ . '/../../config/config.php';
-    if($_SERVER['REQUEST_METHOD']==='GET'){
-      $error = null; include __DIR__ . '/../../views/login.php'; return;
-    }
-    if(!Utils::checkCsrf($_POST['csrf'] ?? '')){ http_response_code(400); exit('Bad CSRF'); }
+    global $pdo;
+    if($_SERVER['REQUEST_METHOD']==='GET'){ include APP_ROOT.'/views/auth/login.php'; return; }
+
+    $username = trim($_POST['username'] ?? '');
+    $password = trim($_POST['password'] ?? '');
     $dao = new UsersDAO($pdo);
-    $u = $dao->findByUsername(trim($_POST['username'] ?? ''));
-    if($u && password_verify($_POST['password'] ?? '', $u['password'])){
-      Auth::login(array('id'=>$u['id'],'username'=>$u['username'],'role'=>$u['role']));
-      Utils::redirect('dashboard');
+    $user = $dao->findByUsername($username);
+
+    if(!$user || !password_verify($password, $user['password'])){
+      $error = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+      include APP_ROOT.'/views/auth/login.php'; return;
     }
-    $error = 'بيانات الدخول غير صحيحة'; include __DIR__ . '/../../views/login.php';
+
+    Auth::login($user);
+    Utils::redirect('dashboard');
   }
-  public function logout(){ Auth::logout(); Utils::redirect('login'); }
+
+  public function logout(){
+    Auth::logout();
+    Utils::redirect('login.php');
+  }
 }
+?>
