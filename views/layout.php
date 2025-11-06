@@ -1,30 +1,21 @@
-<?php $cfg = require __DIR__ . '/../config/config.php'; ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title><?= Utils::h($cfg['APP_NAME']) ?></title>
-  <link rel="stylesheet" href="<?= $cfg['APP_URL'] ?>/assets/css/app.css">
-  <script type="module" src="<?= $cfg['APP_URL'] ?>/assets/js/app.js"></script>
+<meta charset="UTF-8">
+<title>لوحة التحكم</title>
+<style>
+body{font-family:Tajawal,Arial;background:#f8f9fa;margin:0;padding:20px;}
+h1{color:#333;}
+.btn{padding:6px 12px;border:none;border-radius:6px;text-decoration:none;color:white;background:#007bff;cursor:pointer;}
+.btn.outline{background:transparent;border:1px solid #007bff;color:#007bff;}
+.btn.danger{background:#dc3545;}
+.table{width:100%;border-collapse:collapse;margin-top:10px;}
+.table th,.table td{border:1px solid #ccc;padding:8px;text-align:center;}
+.card{padding:10px;background:white;border-radius:8px;box-shadow:0 0 5px rgba(0,0,0,.1);}
+.input{padding:6px;width:100%;margin-bottom:10px;}
+</style>
 </head>
 <body>
-<header class="topbar">
-  <nav>
-    <span class="brand">SupportOps</span>
-    <a href="<?= $cfg['APP_URL'] ?>/dashboard">لوحة التحكم</a>
-    <a href="<?= $cfg['APP_URL'] ?>/customers">العملاء</a>
-    <a href="<?= $cfg['APP_URL'] ?>/tickets">التذاكر</a>
-    <form class="actions" action="<?= $cfg['APP_URL'] ?>/search" method="get">
-      <input class="input" name="q" placeholder="ابحث: كود 33، Pylontech 5001...">
-      <button class="btn outline" type="submit">بحث</button>
-      <?php if(Auth::check()): ?><a class="btn danger" href="<?= $cfg['APP_URL'] ?>/logout">خروج</a><?php endif; ?>
-    </form>
-  </nav>
-</header>
-<div class="toast"></div>
-<main class="container">
-  <?php if(isset($content)) echo $content; ?>
-</main>
+<?= $content ?>
 </body>
 </html>
