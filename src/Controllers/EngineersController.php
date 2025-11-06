@@ -52,6 +52,7 @@ class EngineersController {
       $id = intval($_GET['id'] ?? 0);
       if (!$id) Utils::redirect('engineers');
       $engineer = $dao->findById($id);
+      if (!$engineer) Utils::redirect('engineers');
       include __DIR__ . '/../../views/engineers/edit.php';
       return;
     }
@@ -66,7 +67,14 @@ class EngineersController {
     $phone = trim($_POST['phone'] ?? '');
     $specialty = trim($_POST['specialty'] ?? '');
 
-    $dao->update($id, $name, $phone, $specialty);
+    if (!$id || !$name || !$phone) {
+      $error = 'البيانات غير كاملة';
+      $engineer = $dao->findById($id);
+      include __DIR__ . '/../../views/engineers/edit.php';
+      return;
+    }
+
+    $dao->update($id, $name, $phone, $specialty ?: null);
     Utils::audit($pdo, 'update_engineer', 'engineer', $id, $name);
     Utils::redirect('engineers');
   }
@@ -82,6 +90,8 @@ class EngineersController {
     }
 
     $id = intval($_POST['id'] ?? 0);
+    if (!$id) Utils::redirect('engineers');
+
     $dao = new EngineersDAO($pdo);
     $dao->delete($id);
     Utils::audit($pdo, 'delete_engineer', 'engineer', $id, null);
