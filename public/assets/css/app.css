@@ -1,0 +1,39 @@
+:root{
+  --bg:#0f172a; --panel:#111827; --text:#e5e7eb; --muted:#9ca3af;
+  --primary:#22c55e; --primary-dark:#16a34a; --danger:#ef4444; --warning:#f59e0b; --info:#3b82f6;
+  --card:#0b1220; --border:#1f2937;
+}
+*{box-sizing:border-box}
+html[dir="rtl"] body{
+  margin:0; font-family:"Noto Sans Arabic", system-ui, -apple-system, Segoe UI, Tahoma, sans-serif;
+  background:var(--bg); color:var(--text);
+}
+a{color:var(--info); text-decoration:none}
+a:hover{opacity:.9}
+.topbar{ position:sticky; top:0; z-index:1000; background:var(--panel); border-bottom:1px solid var(--border); }
+.topbar nav{ display:flex; gap:10px; align-items:center; padding:12px; flex-wrap:wrap; }
+.topbar .brand{font-weight:800; color:var(--primary)}
+.topbar .actions{margin-inline-start:auto; display:flex; gap:8px; align-items:center}
+.container{max-width:1100px; margin:16px auto; padding:0 12px}
+.card{ background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,.3); }
+.grid{display:grid; gap:12px}
+.grid.kpi{grid-template-columns:repeat(2,1fr)}
+@media(min-width:700px){ .grid.kpi{grid-template-columns:repeat(4,1fr)} }
+.kpi .value{font-size:22px; font-weight:800}
+.btn{appearance:none; border:none; border-radius:10px; padding:10px 14px; background:var(--primary); color:#021; font-weight:700; cursor:pointer}
+.btn:hover{background:var(--primary-dark)}
+.btn.outline{background:transparent; color:var(--primary); border:1px solid var(--primary)}
+.btn.danger{background:var(--danger); color:#fff}
+.input, textarea, select{ width:100%; background:#0a0f1a; border:1px solid var(--border); border-radius:8px; padding:10px; color:var(--text); margin:8px 0; }
+.table{width:100%; border-collapse:collapse; background:var(--card); border-radius:10px; overflow:hidden}
+.table th, .table td{border-bottom:1px solid var(--border); padding:10px; font-size:14px}
+.table thead{background:var(--panel)}
+.badge{display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px}
+.badge.new{background:#1f2937; color:#e5e7eb}
+.badge.assigned{background:var(--info); color:#04111f}
+.badge.solved_phone{background:#a3e635; color:#07210a}
+.badge.solved_field{background:var(--primary); color:#03150a}
+.toast{position:fixed; bottom:16px; left:16px; right:16px; display:flex; gap:10px; flex-direction:column}
+.toast .msg{background:#111827; border:1px solid var(--border); padding:10px; border-radius:8px}
+.error { color:#ef4444; }
+.suggestions { font-size: 12px; color:#9ca3af; }
